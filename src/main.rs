@@ -1,3 +1,44 @@
+use yew::prelude::*;
+
+struct Model {
+    value: i64
+}
+
+#[function_component(App)]
+fn app() -> Html {
+    let state = use_state(|| Model {
+        value: 0
+    });
+
+    let onclick_add = {
+        let state = state.clone();
+
+        Callback::from(move |_| {
+            state.set(Model {
+                value: state.value + 1
+            })
+        })
+    };
+
+    let onclick_sub = {
+        let state = state.clone();
+
+        Callback::from(move |_| {
+            state.set(Model {
+                value: state.value - 1
+            })
+        })
+    };
+
+    html! {
+        <div>
+            <button onclick={onclick_add}>{"+1"}</button>
+            <button onclick={onclick_sub}>{"-1"}</button>
+            <p>{ state.value }</p>
+        </div>
+    }
+}
+
 fn main() {
-    println!("Hello, world!");
+    yew::start_app::<App>();
 }
